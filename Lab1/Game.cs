@@ -8,18 +8,20 @@ namespace Lab1
 {
     public class Game
     {
-        public string Player { get; }
-        public string Opponent { get;  }
-        public DateTime Date { get;  }
+        public GameAccount Player { get; }
+        public GameAccount Opponent { get; }
+        public DateTime Date { get; }
         public int Rating { get; }
+        public string Status { get; }
 
 
-        public Game(string Player, string Opponent, DateTime Date, int Rating)
+        public Game(GameAccount Player, GameAccount Opponent, DateTime Date, int Rating, string Status)
         {
             this.Player = Player;
             this.Opponent = Opponent;
             this.Date = Date;
             this.Rating = Rating;
+            this.Status = Status;
         }
     }
 }

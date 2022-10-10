@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Transactions;
+
+namespace Lab1
+{
+    public class GameAccount
+    {
+        public string UserName { get; set; }
+        public int CurrentRating { get; set; }
+        public int GamesCount { get; set; }
+        public int StartRating = 10;
+        private List<Game> GamesList = new List<Game>();
+
+        public GameAccount(string UserName)
+        {
+            this.UserName = UserName;
+            CurrentRating = StartRating;
+            GamesCount = 0;
+        }
+
+        public void WinGame(GameAccount player, GameAccount opponent, DateTime date, int rating)
+        {
+            if (rating < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(rating), "Rating should be positive!");
+            }
+            if (opponent.CurrentRating - rating < 1)
+            {
+                throw new InvalidOperationException("The opponent's rating is too low for this game!");
+            }
+            player.CurrentRating += rating;
+            opponent.CurrentRating -= rating;
+            player.GamesCount++;
+            opponent.GamesCount++;
+            var game = new Game(player, opponent, date, rating, "Victory");
+            GamesList.Add(game);
+        }
+        public void LoseGame(GameAccount player, GameAccount opponent, DateTime date, int rating)
+        {
+            if (rating < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(rating), "Rating should be positive!");
+            }
+            if (player.CurrentRating - rating < 1)
+            {
+                throw new InvalidOperationException("The opponent's rating is too low for this game!");
+            }
+            player.CurrentRating -= rating;
+            opponent.CurrentRating += rating;
+            player.GamesCount++;
+            opponent.GamesCount++;
+            var game = new Game(player, opponent, date, -rating, "Defeat");
+            GamesList.Add(game);
+        }
+        public string GetStats()
+        {
+            var statistics = new System.Text.StringBuilder();
+            int index = 0;
+            string status;
+            statistics.AppendLine("Date\t\tPlayer\tOpponent\tStatus\tRating\tGame Index");
+
+            foreach (var game in GamesList)
+            {
+                index++;
+                statistics.AppendLine($"{game.Date.ToShortDateString()}\t{game.Player.UserName}\t{game.Opponent.UserName}\t\t{game.Status}\t{game.Rating}\t{index}");
+            }
+
+            return statistics.ToString();
+        }
+    }
+}
+
+
+
+
+
+
+
+using Lab1;
+
+GameAccount firstPlayer = new GameAccount("Anton");
+GameAccount secondPlayer = new GameAccount("Ivan");
+
+firstPlayer.WinGame(firstPlayer, secondPlayer, DateTime.Now, 5);
+firstPlayer.LoseGame(firstPlayer, secondPlayer, DateTime.Now, 7);
+firstPlayer.WinGame(firstPlayer, secondPlayer, DateTime.Now, 5);
+firstPlayer.LoseGame(firstPlayer, secondPlayer, DateTime.Now, 7);
+
+secondPlayer.WinGame(secondPlayer, firstPlayer, DateTime.Now, 2);
+secondPlayer.WinGame(secondPlayer, firstPlayer, DateTime.Now, 2);
+secondPlayer.WinGame(secondPlayer, firstPlayer, DateTime.Now, 2);
+secondPlayer.WinGame(secondPlayer, firstPlayer, DateTime.Now, 2);
+secondPlayer.WinGame(secondPlayer, firstPlayer, DateTime.Now, 2);
+/*
+try
+{
+    secondPlayer.WinGame(secondPlayer, firstPlayer, DateTime.Now, 100);
+}
+catch (InvalidOperationException e)
+{
+    Console.WriteLine("The opponent's rating is too low for this game!");
+    Console.WriteLine(e.ToString());
+    return;
+}
+*/
+
+Console.WriteLine(firstPlayer.GetStats());
+Console.

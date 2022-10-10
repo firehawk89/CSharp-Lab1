@@ -13,9 +13,10 @@ namespace Lab1
     {
         public string UserName { get; set; }
         public int CurrentRating { get; private set; }
-        public int GamesCount = 0;
 
+        public int GamesCount = 0;
         public int StartRating = 10;
+
         private List<Game> GamesList = new List<Game>();
 
         public GameAccount(string UserName)

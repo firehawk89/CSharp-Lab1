@@ -4,7 +4,6 @@ GameAccount firstPlayer = new GameAccount("Anton");
 GameAccount secondPlayer = new GameAccount("Ivan");
 
 firstPlayer.WinGame(secondPlayer, DateTime.Now, 5);
-
 /*
 try
 {
@@ -12,12 +11,23 @@ try
 }
 catch (InvalidOperationException e)
 {
-    Console.WriteLine("The Player's rating is too low for this game!");
+    Console.WriteLine("Error");
     Console.WriteLine(e.ToString());
     return;
 }
 */
-
+/*
+try
+{
+    firstPlayer.LoseGame(secondPlayer, DateTime.Now, -7);
+}
+catch (ArgumentOutOfRangeException e)
+{
+    Console.WriteLine("Error!");
+    Console.WriteLine(e.ToString());
+    return;
+}
+*/
 firstPlayer.LoseGame(secondPlayer, DateTime.Now, 7);
 firstPlayer.WinGame( secondPlayer, DateTime.Now, 4);
 firstPlayer.WinGame(secondPlayer, DateTime.Now, 1);

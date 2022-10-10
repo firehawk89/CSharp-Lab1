@@ -14,7 +14,7 @@ namespace Lab1
         public string UserName { get; set; }
         public int CurrentRating { get; private set; }
 
-        public int GamesCount = 0;
+        public static int GamesCount = 0;
         public int StartRating = 10;
 
         private List<Game> GamesList = new List<Game>();
@@ -41,8 +41,10 @@ namespace Lab1
             }
             this.CurrentRating += rating;
             GamesCount++;
-            var game = new Game(this, opponent, date, rating, "Victory");
-            GamesList.Add(game);
+            var playerGame = new Game(this, opponent, date, rating, "Victory");
+            var opponentGame = new Game(opponent, this, date, -rating, "Defeat");
+            this.GamesList.Add(playerGame);
+            opponent.GamesList.Add(opponentGame);
         }
         public void LoseGame(GameAccount opponent, DateTime date, int rating)
         {
@@ -60,22 +62,23 @@ namespace Lab1
             }
             opponent.CurrentRating += rating;
             GamesCount++;
-            var game = new Game(this, opponent, date, -rating, "Defeat");
-            GamesList.Add(game);
+            var playerGame = new Game(this, opponent, date, -rating, "Defeat");
+            var opponentGame = new Game(opponent, this, date, rating, "Victory");
+            this.GamesList.Add(playerGame);
+            opponent.GamesList.Add(opponentGame);
         }
         public string GetStats()
         {
             var statistics = new System.Text.StringBuilder();
-            int index = 0;
             statistics.AppendLine($"{this.UserName}'s Stats:");
             statistics.AppendLine("Date\t\tPlayer\tOpponent\tStatus\t\tRating\tGame ID");
 
-            foreach (var game in GamesList)
+            foreach (var game in this.GamesList)
             {
                 statistics.AppendLine($"{game.Date.ToShortDateString()}\t{game.Player.UserName}\t{game.Opponent.UserName}\t\t{game.Status}\t\t{game.Rating.ToString("+#;-#;0")}\t{game.ID}");
             }
 
-            statistics.AppendLine($"Total Games Played: {GamesCount}");
+            //statistics.AppendLine($"Total Games Played: {GamesCount}");
             return statistics.ToString();
         }
     }

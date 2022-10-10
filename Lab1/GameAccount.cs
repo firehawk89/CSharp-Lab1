@@ -33,10 +33,13 @@ namespace Lab1
             }
             if (opponent.CurrentRating - rating < 1)
             {
-                throw new InvalidOperationException("The opponent's rating is too low for this game!");
+                opponent.CurrentRating = 1;
+            }
+            else 
+            { 
+                opponent.CurrentRating -= rating; 
             }
             this.CurrentRating += rating;
-            opponent.CurrentRating -= rating;
             GamesCount++;
             var game = new Game(this, opponent, date, rating, "Victory");
             GamesList.Add(game);
@@ -49,9 +52,12 @@ namespace Lab1
             }
             if (this.CurrentRating - rating < 1)
             {
-                throw new InvalidOperationException("The player's rating is too low for this game!");
+                this.CurrentRating = 1;
             }
-            this.CurrentRating -= rating;
+            else
+            {
+                this.CurrentRating -= rating;
+            }
             opponent.CurrentRating += rating;
             GamesCount++;
             var game = new Game(this, opponent, date, -rating, "Defeat");

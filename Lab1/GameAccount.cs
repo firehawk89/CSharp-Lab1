@@ -18,6 +18,11 @@ namespace Lab1
         public int StartRating = 10;
 
         private List<Game> GamesList = new List<Game>();
+        private enum GameStatus
+        {
+            Victory,
+            Defeat
+        }
 
         public GameAccount(string UserName)
         {
@@ -41,8 +46,8 @@ namespace Lab1
             }
             this.CurrentRating += rating;
             GamesCount++;
-            var playerGame = new Game(this, opponent, date, rating, "Victory");
-            var opponentGame = new Game(opponent, this, date, -rating, "Defeat");
+            var playerGame = new Game(this, opponent, date, rating, GameStatus.Victory.ToString());
+            var opponentGame = new Game(opponent, this, date, -rating, GameStatus.Defeat.ToString());
             this.GamesList.Add(playerGame);
             opponent.GamesList.Add(opponentGame);
         }
@@ -62,8 +67,8 @@ namespace Lab1
             }
             opponent.CurrentRating += rating;
             GamesCount++;
-            var playerGame = new Game(this, opponent, date, -rating, "Defeat");
-            var opponentGame = new Game(opponent, this, date, rating, "Victory");
+            var playerGame = new Game(this, opponent, date, -rating, GameStatus.Defeat.ToString());
+            var opponentGame = new Game(opponent, this, date, rating, GameStatus.Victory.ToString());
             this.GamesList.Add(playerGame);
             opponent.GamesList.Add(opponentGame);
         }
@@ -78,7 +83,6 @@ namespace Lab1
                 statistics.AppendLine($"{game.Date.ToShortDateString()}\t{game.Player.UserName}\t{game.Opponent.UserName}\t\t{game.Status}\t\t{game.Rating.ToString("+#;-#;0")}\t{game.ID}");
             }
 
-            //statistics.AppendLine($"Total Games Played: {GamesCount}");
             return statistics.ToString();
         }
     }

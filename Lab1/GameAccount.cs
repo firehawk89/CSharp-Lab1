@@ -62,12 +62,11 @@ namespace Lab1
             var statistics = new System.Text.StringBuilder();
             int index = 0;
             statistics.AppendLine($"{this.UserName}'s Stats:");
-            statistics.AppendLine("Date\t\tPlayer\tOpponent\tStatus\t\tRating\tGame Index");
+            statistics.AppendLine("Date\t\tPlayer\tOpponent\tStatus\t\tRating\tGame ID");
 
             foreach (var game in GamesList)
             {
-                index++;
-                statistics.AppendLine($"{game.Date.ToShortDateString()}\t{game.Player.UserName}\t{game.Opponent.UserName}\t\t{game.Status}\t\t{game.Rating.ToString("+#;-#;0")}\t{index.ToString()}");
+                statistics.AppendLine($"{game.Date.ToShortDateString()}\t{game.Player.UserName}\t{game.Opponent.UserName}\t\t{game.Status}\t\t{game.Rating.ToString("+#;-#;0")}\t{game.ID}");
             }
 
             statistics.AppendLine($"Total Games Played: {GamesCount}");

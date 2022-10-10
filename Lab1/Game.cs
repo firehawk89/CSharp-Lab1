@@ -13,6 +13,9 @@ namespace Lab1
         public DateTime Date { get; }
         public int Rating { get; }
         public string Status { get; }
+        public int ID { get; }
+
+        private static int gameID = 31201;
 
 
         public Game(GameAccount Player, GameAccount Opponent, DateTime Date, int Rating, string Status)
@@ -22,6 +25,8 @@ namespace Lab1
             this.Date = Date;
             this.Rating = Rating;
             this.Status = Status;
+            ID = gameID;
+            gameID++;
         }
     }
 }

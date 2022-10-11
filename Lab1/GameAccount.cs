@@ -14,7 +14,6 @@ namespace Lab1
         public string UserName { get; set; }
         public int CurrentRating { get; private set; }
 
-        public static int GamesCount = 0;
         public int StartRating = 10;
 
         private List<Game> GamesList = new List<Game>();
@@ -45,7 +44,6 @@ namespace Lab1
                 opponent.CurrentRating -= rating; 
             }
             this.CurrentRating += rating;
-            GamesCount++;
             var playerGame = new Game(this, opponent, date, rating, GameStatus.Victory.ToString());
             var opponentGame = new Game(opponent, this, date, -rating, GameStatus.Defeat.ToString());
             this.GamesList.Add(playerGame);
@@ -66,7 +64,6 @@ namespace Lab1
                 this.CurrentRating -= rating;
             }
             opponent.CurrentRating += rating;
-            GamesCount++;
             var playerGame = new Game(this, opponent, date, -rating, GameStatus.Defeat.ToString());
             var opponentGame = new Game(opponent, this, date, rating, GameStatus.Victory.ToString());
             this.GamesList.Add(playerGame);
@@ -83,6 +80,7 @@ namespace Lab1
                 statistics.AppendLine($"{game.Date.ToShortDateString()}\t{game.Player.UserName}\t{game.Opponent.UserName}\t\t{game.Status}\t\t{game.Rating.ToString("+#;-#;0")}\t{game.ID}");
             }
 
+            statistics.AppendLine($"Total Games Played: {this.GamesList.Count()}");
             return statistics.ToString();
         }
     }

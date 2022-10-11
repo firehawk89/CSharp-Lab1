@@ -30,6 +30,5 @@ catch (ArgumentOutOfRangeException e)
 
 Console.WriteLine(firstPlayer.GetStats());
 Console.WriteLine(secondPlayer.GetStats());
-Console.WriteLine("Total Games Played: " + GameAccount.GamesCount);
 Console.WriteLine($"{firstPlayer.UserName}'s Rating: " + firstPlayer.CurrentRating.ToString());
 Console.WriteLine($"{secondPlayer.UserName}'s Rating: " + secondPlayer.CurrentRating.ToString());

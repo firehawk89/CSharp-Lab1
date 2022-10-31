@@ -17,6 +17,12 @@ namespace Lab1
 
         private static int gameID = 31201;
 
+        public enum StatusList
+        {
+            Victory,
+            Defeat
+        }
+
         public Game(GameAccount Player, GameAccount Opponent, DateTime Date, int Rating, string Status)
         {
             this.Player = Player;

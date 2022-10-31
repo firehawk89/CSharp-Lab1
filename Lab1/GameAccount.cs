@@ -17,11 +17,6 @@ namespace Lab1
         public int StartRating = 10;
 
         private List<Game> GamesList = new List<Game>();
-        private enum GameStatus
-        {
-            Victory,
-            Defeat
-        }
 
         public GameAccount(string UserName)
         {
@@ -44,8 +39,10 @@ namespace Lab1
                 opponent.CurrentRating -= rating; 
             }
             this.CurrentRating += rating;
-            var playerGame = new Game(this, opponent, date, rating, GameStatus.Victory.ToString());
-            var opponentGame = new Game(opponent, this, date, -rating, GameStatus.Defeat.ToString());
+
+            var playerGame = new Game(this, opponent, date, rating, Game.StatusList.Victory.ToString());
+            var opponentGame = new Game(opponent, this, date, -rating, Game.StatusList.Defeat.ToString());
+
             this.GamesList.Add(playerGame);
             opponent.GamesList.Add(opponentGame);
         }
@@ -64,14 +61,17 @@ namespace Lab1
                 this.CurrentRating -= rating;
             }
             opponent.CurrentRating += rating;
-            var playerGame = new Game(this, opponent, date, -rating, GameStatus.Defeat.ToString());
-            var opponentGame = new Game(opponent, this, date, rating, GameStatus.Victory.ToString());
+
+            var playerGame = new Game(this, opponent, date, -rating, Game.StatusList.Defeat.ToString());
+            var opponentGame = new Game(opponent, this, date, rating, Game.StatusList.Victory.ToString());
+
             this.GamesList.Add(playerGame);
             opponent.GamesList.Add(opponentGame);
         }
         public string GetStats()
         {
             var statistics = new System.Text.StringBuilder();
+
             statistics.AppendLine($"{this.UserName}'s Stats:");
             statistics.AppendLine("Date\t\tPlayer\tOpponent\tStatus\t\tRating\tGame ID");
 
@@ -80,7 +80,8 @@ namespace Lab1
                 statistics.AppendLine($"{game.Date.ToShortDateString()}\t{game.Player.UserName}\t{game.Opponent.UserName}\t\t{game.Status}\t\t{game.Rating.ToString("+#;-#;0")}\t{game.ID}");
             }
 
-            statistics.AppendLine($"Total Games Played: {this.GamesList.Count()}");
+            statistics.AppendLine($"Total Games Played: {this.GamesList.Count}");
+
             return statistics.ToString();
         }
     }
